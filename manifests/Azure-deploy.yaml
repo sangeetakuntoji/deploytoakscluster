@@ -3,20 +3,20 @@ kind: Deployment
 metadata:
   name: mywebsite-deployment
   labels:
-    app: mywebsite
+    app: myfirstwebsite
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mywebsite
+      app: myfirstwebsite
   template:
     metadata:
       labels:
-        app: mywebsite
+        app: myfirstwebsite
     spec:
       containers:
-      - name: dotnetapp
-        image: devlopmentacr.azurecr.io/mywebsite:af5cc12752048cffc695d6ac79895d5cb86c5f52
+      - name: myfirstwebsite
+        image: devlopmentacr.azurecr.io/myfirstwebsite:3c6c04f89db66e4111b13b65d50ee890280f5e1b
         ports:
         - containerPort: 80
 
@@ -28,7 +28,7 @@ metadata:
   name: mywebsite-service
 spec:
   selector:
-    app: mywebsite
+    app: myfirstwebsite
   ports:
     - protocol: TCP
       port: 80
