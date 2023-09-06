@@ -3,6 +3,10 @@ on: [push]
 jobs:
    build:
       runs-on: ubuntu-latest
+      defaults:
+        run:
+          shell: bash
+          working-directory: dockercontent
       steps:
          - uses: actions/checkout@master
 
@@ -13,7 +17,7 @@ jobs:
               password: ${{ secrets.REGISTRY_PASSWORD }}
 
          - run: 
-           working-directory: dockercontent|
+           
               docker build . -t devlopmentacr.azurecr.io/mywebsite:${{ github.sha }}
               docker push devlopmentacr.azurecr.io/mywebsite:${{ github.sha }}
 
