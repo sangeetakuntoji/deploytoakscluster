@@ -39,7 +39,7 @@ jobs:
           with:
               action: deploy
               manifests: |
-                 manifests/Azure-deploy.yml
+                Azure-deploy.yml
               images: |
                devlopmentacr.azurecr.io/myfirstwebsite:${{ github.sha }}
                imagepullsecrets: |
