@@ -1,26 +1,26 @@
-on: [push]
+on:
+  push:
+    branches:
+    - main
 
 jobs:
-   build:
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          shell: bash
-          working-directory: dockercontent
-      steps:
-         - uses: actions/checkout@master
-
-         - uses: Azure/docker-login@v1
-           with:
-              login-server: devlopmentacr.azurecr.io
-              username: ${{ secrets.REGISTRY_USERNAME }}
-              password: ${{ secrets.REGISTRY_PASSWORD }}
-
-         - run: 
-           
-              docker build . -t devlopmentacr.azurecr.io/mywebsite:${{ github.sha }}
-              docker push devlopmentacr.azurecr.io/mywebsite:${{ github.sha }}
-
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: dockercontent
+    steps:
+    - uses: actions/checkout@v2
+    - uses: azure/docker-login@v1
+      with:
+        login-server: devlopmentacr.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - run: |
+        docker build . -t devlopmentacr.azurecr.io/websitehtml:${{ github.sha }} 
+        docker push devlopmentacr.azurecr.io/websitehtml:${{ github.sha }} 
+        
          - uses: azure/setup-kubectl@v2.0
 
          # Set the target AKS cluster.
