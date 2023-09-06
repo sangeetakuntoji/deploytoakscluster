@@ -12,7 +12,8 @@ jobs:
               username: ${{ secrets.REGISTRY_USERNAME }}
               password: ${{ secrets.REGISTRY_PASSWORD }}
 
-         - run: |
+         - run: 
+           working-directory: dockercontent|
               docker build . -t devlopmentacr.azurecr.io/mywebsite:${{ github.sha }}
               docker push devlopmentacr.azurecr.io/mywebsite:${{ github.sha }}
 
