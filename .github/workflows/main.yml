@@ -20,7 +20,7 @@ jobs:
     - run: |
         docker build . -t devlopmentacr.azurecr.io/websitehtml:${{ github.sha }} 
         docker push devlopmentacr.azurecr.io/websitehtml:${{ github.sha }} 
-        
+
          - uses: azure/setup-kubectl@v2.0
 
          # Set the target AKS cluster.
@@ -43,6 +43,6 @@ jobs:
               manifests: |
                  manifests/Azure-deploy.yml
               images: |
-               devlopmentacr.azurecr.io/mywebsite:${{ github.sha }}
+               devlopmentacr.azurecr.io/websitehtml:${{ github.sha }}
                imagepullsecrets: |
                  demo-k8s-secret
