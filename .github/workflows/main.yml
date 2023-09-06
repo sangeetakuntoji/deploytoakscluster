@@ -1,48 +1,46 @@
-on:
-  push:
-    branches:
-    - main
+on: [push]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: dockercontent
-    steps:
-    - uses: actions/checkout@v2
-    - uses: azure/docker-login@v1
-      with:
-        login-server: devlopmentacr.azurecr.io
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-    - run: |
-        docker build . -t devlopmentacr.azurecr.io/websitehtml:${{ github.sha }} 
-        docker push devlopmentacr.azurecr.io/websitehtml:${{ github.sha }} 
+   build:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          shell: bash
+          working-directory: dockercontent
+      steps:
+        - uses: actions/checkout@v2
+        - uses: azure/docker-login@v1
+          with:
+              login-server: devlopmentacr.azurecr.io
+              username: ${{ secrets.REGISTRY_USERNAME }}
+              password: ${{ secrets.REGISTRY_PASSWORD }}
 
-         - uses: azure/setup-kubectl@v2.0
+        - run: |
+           
+              docker build . -t devlopmentacr.azurecr.io/myfirstwebsite:${{ github.sha }}
+              docker push devlopmentacr.azurecr.io/myfirstwebsite:${{ github.sha }}
 
+        - uses: azure/setup-kubectl@v2.0  
          # Set the target AKS cluster.
-         - uses: Azure/aks-set-context@v1
-           with:
+        - uses: Azure/aks-set-context@v1
+          with:
               creds: '${{ secrets.AZURE_CREDENTIALS }}'
               cluster-name: learnk8scluster
               resource-group: learnk8sResourceGroup
 
-         - uses: Azure/k8s-create-secret@v1.1
-           with:
+        - uses: Azure/k8s-create-secret@v1.1
+          with:
               container-registry-url: devlopmentacr.azurecr.io
               container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
               container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
               secret-name: demo-k8s-secret
 
-         - uses: Azure/k8s-deploy@v4
-           with:
+        - uses: Azure/k8s-deploy@v4
+          with:
               action: deploy
               manifests: |
-                 manifests/Azure-deploy.yaml
+                 manifests/Azure-deploy.yml
               images: |
-               devlopmentacr.azurecr.io/websitehtml:${{ github.sha }}
+               devlopmentacr.azurecr.io/myfirstwebsite:${{ github.sha }}
                imagepullsecrets: |
                  demo-k8s-secret
