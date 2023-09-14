@@ -39,7 +39,8 @@ jobs:
           with:
               action: deploy
               manifests: |
-                manifests/Azure-deploy.yaml
+                manifests/deployment.yaml
+                manifests/service.yaml
               images: |
                devlopmentacr.azurecr.io/myfirstwebsite:${{ github.sha }}
                imagepullsecrets: |
