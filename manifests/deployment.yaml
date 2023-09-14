@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dotnet
+  name: myfirstwebsite
   labels:
-    app: dotnetapp
+    app: myfirstwebsite
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dotnetapp
+      app: myfirstwebsite
   template:
     metadata:
       labels:
-        app: dotnetapp
+        app: myfirstwebsite
     spec:
       containers:
-      - name: dotnetapp
-        image: devlopmentacr.azurecr.io/dotnetapp:v1
+      - name: myfirstwebsite
+        image: devlopmentacr.azurecr.io/myfirstwebsite:b4c61f9476aa6c2fce1bae2ddcf7ed2ae2459e13
         ports:
         - containerPort: 80
